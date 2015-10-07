@@ -11,9 +11,9 @@ xmlns:gap="http://phonegap.com/ns/1.0"
     <author email="rjfun.mobile@gmail.com" href="http://rjfun.github.io/">RjFun</author>
     <content src="index.html" />
     <access origin="*" />
-
+<preference name='phonegap-version' value='cli-5.1.1' />
     <preference name="permissions" value="none"/>
-    <gap:plugin name="cordova-plugin-admobpro" source="plugins.cordova.io" version="2.0.0" />
+    <gap:plugin name="cordova-plugin-admobpro" source="plugins.cordova.io" />
 
     <!-- Customize your app and platform with the preference element. -->
     <preference name="orientation"                value="portrait" />        <!-- all: default means both landscape and portrait are enabled -->
