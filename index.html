@@ -44,7 +44,7 @@
     </style>
     <script>
         $(document).ready(function () {
-            var d,s;alert("1");
+            var d,s;
             $("#rSubmit").click(function () {
                 var search_input = $("#rWord").val();
                 var input = encodeURIComponent(search_input);
@@ -53,7 +53,6 @@
                     url: "http://rhymebrain.com/talk?function=getRhymes&word=" + input,
                     dataType: "json",
                     success: function (data) {
-                        alert("2");
                         d = data;
                         document.getElementById("rContainer").innerHTML = "";
                         var i = 0; var color;
@@ -61,7 +60,6 @@
                             if (i > 25) {
                                 document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored' id='rMore'>Load More</button>";
                                 $("#rMore").on("click", function () {
-                                    alert("3");
                                     document.getElementById("rContainer").innerHTML = "";
                                     var data = d;
                                     var i = 0;
@@ -85,13 +83,12 @@
             });
             $("#sSubmit").click(function () {
                 var search_input = $("#sWord").val();
-                alert("1");
                 var input = encodeURIComponent(search_input);
                 $.ajax({
                     type: 'GET',
                     url: "http://thesaurus.altervista.org/service.php?word=" + input + "&language=en_US&output=json&key=FPDsDhiE2NnvNRfBcd0s",
                     dataType: "jsonp",
-                    success: function (data) {alert("2");
+                    success: function (data) {
                         s = data;
                         document.getElementById("sContiner").innerHTML = "";
                         var i = 0; var color;
@@ -111,13 +108,13 @@
                     }
                 });
             });
-alert("0");
+
+
         });
     </script>
 </head>
-<body>
-    <!--onload="onLoad()" onresize="onResize()"-->
-    <!--<script>
+<body onload="onLoad()" onresize="onResize()">
+    <script>
     function onLoad() {
         if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
             document.addEventListener('deviceready', initApp, false);
@@ -224,7 +221,7 @@ alert("0");
         var s = document.getElementById('sizeinfo');
         s.innerHTML = "web view: " + window.innerWidth + " x " + window.innerHeight;
     }
-    </script>-->
+    </script>
     <div id="fullpage" style="display:none">
         <p>Demo for AdMob Plugin</p>
         Banner<br /> Standard: <select id="adSize">
