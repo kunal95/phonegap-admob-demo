@@ -1,40 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-<meta name="format-detection" content="telephone=no" />
-<meta name="viewport"
-	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-<title>Hello World</title>
-<script type="text/javascript" src="cordova.js"></script>
-<style type="text/css">
-body {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: gray;
-	color: white;
-}
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <title>Hello World</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="jq.js"></script>
+    <script src="material.min.js"></script>
+    <link href="material.min.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            background-color: rgb(240,240,240);
+        }
 
-div#fullpage {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	border: 0px solid red;
-	text-align: center;
-	vertical-align: middle;
-}
+        div#fullpage {
+            width: 100%;
+            height: 1000px;
+            margin: 0;
+            padding: 0;
+            border: 0px solid red;
+            text-align: center;
+            vertical-align: middle;
+        }
 
-button {
-	font-size: 18px;
-}
-</style>
+        .action {
+            text-align: center;
+        }
+
+        button {
+            font-size: 18px;
+        }
+
+        .mdl-button--raised {
+            margin: 5px;
+        }
+
+        #rMore {
+            width: 97%;
+            margin-top: 15px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var d,s;
+            $("#rSubmit").click(function () {
+                var search_input = $("#rWord").val();
+                var input = encodeURIComponent(search_input);
+                $.ajax({
+                    type: 'GET',
+                    url: "http://rhymebrain.com/talk?function=getRhymes&word=" + input,
+                    dataType: "json",
+                    success: function (data) {
+                        d = data;
+                        document.getElementById("rContainer").innerHTML = "";
+                        var i = 0; var color;
+                        while (data[i].word != null) {
+                            if (i > 25) {
+                                document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored' id='rMore'>Load More</button>";
+                                $("#rMore").on("click", function () {
+                                    document.getElementById("rContainer").innerHTML = "";
+                                    var data = d;
+                                    var i = 0;
+                                    while (data[i].word != null) {
+                                        // if (i > 25) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored' id='rMore'>Load More</button>"; break; }
+                                        if (data[i].score == 300) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                                        else if (data[i].score > 150) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                                        else if (data[i].score <= 150) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                                        i++;
+                                    }
+                                });
+                                break;
+                            }
+                            else if (data[i].score == 300) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                            else if (data[i].score > 150) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                            else if (data[i].score <= 150) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
+                            i++;
+                            $("#rSubmit").css("bottom",)
+                        }
+                    }
+                });
+            });
+            $("#sSubmit").click(function () {
+                var search_input = $("#sWord").val();
+                var input = encodeURIComponent(search_input);
+                $.ajax({
+                    type: 'GET',
+                    url: "http://thesaurus.altervista.org/service.php?word=" + input + "&language=en_US&output=json&key=FPDsDhiE2NnvNRfBcd0s",
+                    dataType: "jsonp",
+                    success: function (data) {
+                        s = data;
+                        document.getElementById("sContiner").innerHTML = "";
+                        var i = 0; var color;
+                        while (data.response[i].list != null) {
+                            var j = 0;
+                            if (i > 2) break;
+                            var list = data.response[i].list.synonyms.split("|");
+                            while (list[j] != null) {
+                                var o=list[j].toString();
+                                var a = o.indexOf("(");
+                                if (a > -1) o = o.substring(0, a-1);
+                                document.getElementById("sContiner").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + o + "</button>";
+                                j++;
+                            }
+                            i++;
+                        }
+                    }
+                });
+            });
+
+
+        });
+    </script>
 </head>
-<body onload="onLoad()" onresize="onResize()">
-<script>
+<body>
+    <!--onload="onLoad()" onresize="onResize()"-->
+    <!--<script>
     function onLoad() {
         if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
             document.addEventListener('deviceready', initApp, false);
@@ -45,25 +127,25 @@ button {
 
     var admobid = {};
     if( /(android)/i.test(navigator.userAgent) ) {
-		admobid = {
-			banner: 'ca-app-pub-6869992474017983/9375997553',
-			interstitial: 'ca-app-pub-6869992474017983/1657046752'
-		};
+        admobid = {
+            banner: 'ca-app-pub-6869992474017983/9375997553',
+            interstitial: 'ca-app-pub-6869992474017983/1657046752'
+        };
     } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-		admobid = {
-			banner: 'ca-app-pub-6869992474017983/4806197152',
-			interstitial: 'ca-app-pub-6869992474017983/7563979554'
-		};
+        admobid = {
+            banner: 'ca-app-pub-6869992474017983/4806197152',
+            interstitial: 'ca-app-pub-6869992474017983/7563979554'
+        };
     } else {
-		admobid = {
-			banner: 'ca-app-pub-6869992474017983/8878394753',
-			interstitial: 'ca-app-pub-6869992474017983/1355127956'
-		};
+        admobid = {
+            banner: 'ca-app-pub-6869992474017983/8878394753',
+            interstitial: 'ca-app-pub-6869992474017983/1355127956'
+        };
     }
-        
+
     function initApp() {
-	if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
-	initAd();
+    if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
+    initAd();
         // display a banner at startup
         createSelectedBanner();
     }
@@ -88,19 +170,19 @@ button {
     // optional, in case respond to events or handle error
     function registerAdEvents() {
         // new events, with variable to differentiate: adNetwork, adType, adEvent
-        document.addEventListener('onAdFailLoad', function(data){ 
-        	alert('error: ' + data.error + 
-        			', reason: ' + data.reason + 
-        			', adNetwork:' + data.adNetwork + 
-        			', adType:' + data.adType + 
-        			', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+        document.addEventListener('onAdFailLoad', function(data){
+            alert('error: ' + data.error +
+                    ', reason: ' + data.reason +
+                    ', adNetwork:' + data.adNetwork +
+                    ', adType:' + data.adType +
+                    ', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
         });
         document.addEventListener('onAdLoaded', function(data){});
         document.addEventListener('onAdPresent', function(data){});
         document.addEventListener('onAdLeaveApp', function(data){});
         document.addEventListener('onAdDismiss', function(data){});
     }
-    
+
     // click button to call following functions
     function getSelectedAdSize() {
         var i = document.getElementById("adSize").selectedIndex;
@@ -113,14 +195,14 @@ button {
         return parseInt( items[i].value );
     }
     function createSelectedBanner() {
-    	var overlap = document.getElementById('overlap').checked;
+        var overlap = document.getElementById('overlap').checked;
         var offsetTopBar = document.getElementById('offsetTopBar').checked;
         AdMob.createBanner( {adId:admobid.banner, overlap:overlap, offsetTopBar:offsetTopBar, adSize: getSelectedAdSize(), position:getSelectedPosition()} );
     }
     function createBannerOfGivenSize() {
         var w = document.getElementById('w').value;
         var h = document.getElementById('h').value;
-        
+
         AdMob.createBanner( {adId:admobid.banner,
                            adSize:'CUSTOM', width:w, height:h,
                            position:getSelectedPosition()} );
@@ -141,52 +223,90 @@ button {
         var s = document.getElementById('sizeinfo');
         s.innerHTML = "web view: " + window.innerWidth + " x " + window.innerHeight;
     }
-</script>
-	<div id="fullpage">
-		<p>Demo for AdMob Plugin</p>
-		Banner<br /> Standard: <select id="adSize">
-			<option value='SMART_BANNER'>SMART_BANNER</option>
-			<option value='BANNER'>BANNER</option>
-			<option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
-			<option value='FULL_BANNER'>FULL_BANNER</option>
-			<option value='LEADERBOARD'>LEADERBOARD</option>
-			<option value='SKYSCRAPER'>SKYSCRAPER</option>
-		</select><br /> <input type='checkbox' id='overlap' />overlap<br/>
-         <input type='checkbox' id='offsetTopBar' />offsetTopBar<br/>
-		<button onclick="createSelectedBanner();">create</button>
-		<br /> Custom Size: (<input id='w' type='text' size=3 /> x <input
-			id='h' type='text' size=3>)
-		<button onclick="createBannerOfGivenSize();">create</button>
-		<br />
+    </script>-->
+    <div id="fullpage" style="display:none">
+        <p>Demo for AdMob Plugin</p>
+        Banner<br /> Standard: <select id="adSize">
+            <option value='SMART_BANNER'>SMART_BANNER</option>
+            <option value='BANNER'>BANNER</option>
+            <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
+            <option value='FULL_BANNER'>FULL_BANNER</option>
+            <option value='LEADERBOARD'>LEADERBOARD</option>
+            <option value='SKYSCRAPER'>SKYSCRAPER</option>
+        </select><br /> <input type='checkbox' id='overlap' />overlap<br />
+        <input type='checkbox' id='offsetTopBar' />offsetTopBar<br />
+        <button onclick="createSelectedBanner();">create</button>
+        <br /> Custom Size: (<input id='w' type='text' size=3 /> x <input id='h' type='text' size=3>)
+        <button onclick="createBannerOfGivenSize();">create</button>
+        <br />
 
-		<button onclick="AdMob.removeBanner();">remove banner</button>
+        <button onclick="AdMob.removeBanner();">remove banner</button>
 
-		<hr />
-		<select id="adPosition">
-			<option value='1'>Top Left</option>
-			<option value='2'>Top Center</option>
-			<option value='3'>Top Right</option>
-			<option value='4'>Left</option>
-			<option value='5'>Center</option>
-			<option value='6'>Right</option>
-			<option value='7'>Bottom Left</option>
-			<option value='8' selected>Bottom Center</option>
-			<option value='9'>Bottom Right</option>
-		</select>
-		<button onclick="showBannerAtSelectedPosition();">show</button>
-		<br /> (<input id='x' type='text' size=3 />,<input id='y'
-			type='text' size=3>)
-		<button onclick="showBannerAtGivenXY();">show At XY</button>
-		<br />
+        <hr />
+        <select id="adPosition">
+            <option value='1'>Top Left</option>
+            <option value='2'>Top Center</option>
+            <option value='3'>Top Right</option>
+            <option value='4'>Left</option>
+            <option value='5'>Center</option>
+            <option value='6'>Right</option>
+            <option value='7'>Bottom Left</option>
+            <option value='8' selected>Bottom Center</option>
+            <option value='9'>Bottom Right</option>
+        </select>
+        <button onclick="showBannerAtSelectedPosition();">show</button>
+        <br /> (<input id='x' type='text' size=3 />,<input id='y'
+                                                           type='text' size=3>)
+        <button onclick="showBannerAtGivenXY();">show At XY</button>
+        <br />
 
-		<button onclick="AdMob.hideBanner();">hide banner</button>
-		<hr />
+        <button onclick="AdMob.hideBanner();">hide banner</button>
+        <hr />
 
-		<p>Interstitial</p>
-		<input type='checkbox' id='autoshow' checked />auto show when ready<br />
-		<button onclick="prepareInterstitial();">Prepare</button>
-		<button onclick="AdMob.showInterstitial();">Show</button>
-		<div id='sizeinfo'></div>
-	</div>
+        <p>Interstitial</p>
+        <input type='checkbox' id='autoshow' checked />auto show when ready<br />
+        <button onclick="prepareInterstitial();">Prepare</button>
+        <button onclick="AdMob.showInterstitial();">Show</button>
+        <div id='sizeinfo'></div>
+    </div>
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar" style="background-color:white">
+            <a href="#starks-panel" class="mdl-tabs__tab is-active">Rhyme</a>
+            <a href="#lannisters-panel" class="mdl-tabs__tab">Synonym</a>
+            <a href="#targaryens-panel" class="mdl-tabs__tab">You</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="starks-panel">
+            <div class="action">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="rWord" />
+                    <label class="mdl-textfield__label" for="rWord">Word...</label>
+                </div>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:10px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
+                <img src="ic_blur_on_white_24dp.png" />
+            </button>
+            <div id="rContainer"></div>
+        </div>
+        <div class="mdl-tabs__panel" id="lannisters-panel">
+            <div class="action">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="sWord" />
+                    <label class="mdl-textfield__label" for="sWord">Word...</label>
+                </div>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:10px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
+                <img src="ic_blur_on_white_24dp.png"/>
+            </button>
+            <div id="sContiner"></div>
+        </div>
+        <div class="mdl-tabs__panel" id="targaryens-panel">
+            <div class="action">
+                <div class="mdl-textfield mdl-js-textfield" style="width:100%;padding:20px">
+                    <textarea class="mdl-textfield__input" type="text" rows="30" id="sample5"></textarea>
+                    <label class="mdl-textfield__label" for="sample5">Write your notes here...</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
