@@ -83,7 +83,7 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(JSON.stringify(a) + JSON.stringify(b)+JSON.stringify(c)); }
+                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b)+JSON.stringify(c)); }
                 });
             });
             $("#sSubmit").click(function () {
@@ -112,7 +112,8 @@
                             }
                             i++;
                         }
-                    }
+                    },
+                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); }
                 });
             });
         });
@@ -285,7 +286,7 @@
                     <label class="mdl-textfield__label" for="rWord">Word...</label>
                 </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:60px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:50px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
                 <img src="ic_blur_on_white_24dp.png" />
             </button>
             <div id="rContainer"></div>
@@ -297,7 +298,7 @@
                     <label class="mdl-textfield__label" for="sWord">Word...</label>
                 </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:60px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:50px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
                 <img src="ic_blur_on_white_24dp.png"/>
             </button>
             <div id="sContiner"></div>
