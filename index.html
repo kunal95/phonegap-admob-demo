@@ -83,7 +83,7 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(a+b+c);}
+                    error: function (a, b, c) { alert(JSON.stringify(a) + JSON.stringify(b)+JSON.stringify(c)); }
                 });
             });
             $("#sSubmit").click(function () {
