@@ -50,6 +50,7 @@
                 alert("r");
                 var search_input = $("#rWord").val();
                 var input = encodeURIComponent(search_input);
+                alert(input);
                 $.ajax({
                     type: 'GET',
                     url: "http://rhymebrain.com/talk?function=getRhymes&word=" + input,
@@ -81,7 +82,8 @@
                             else if (data[i].score <= 150) { document.getElementById("rContainer").innerHTML += "<button class='mdl-button mdl-js-button mdl-button--raised'>" + data[i].word + "</button>"; }
                             i++;
                         }
-                    }
+                    },
+                    error: function (a, b, c) { alert(a+b+c);}
                 });
             });
             $("#sSubmit").click(function () {
@@ -283,7 +285,7 @@
                     <label class="mdl-textfield__label" for="rWord">Word...</label>
                 </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:10px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:60px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
                 <img src="ic_blur_on_white_24dp.png" />
             </button>
             <div id="rContainer"></div>
@@ -295,7 +297,7 @@
                     <label class="mdl-textfield__label" for="sWord">Word...</label>
                 </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:10px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:60px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
                 <img src="ic_blur_on_white_24dp.png"/>
             </button>
             <div id="sContiner"></div>
