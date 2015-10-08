@@ -45,7 +45,9 @@
     <script>
         $(document).ready(function () {
             var d,s;
+            alert("r");
             $("#rSubmit").click(function () {
+                alert("r");
                 var search_input = $("#rWord").val();
                 var input = encodeURIComponent(search_input);
                 $.ajax({
@@ -53,6 +55,7 @@
                     url: "http://rhymebrain.com/talk?function=getRhymes&word=" + input,
                     dataType: "json",
                     success: function (data) {
+                        alert("r");
                         d = data;
                         document.getElementById("rContainer").innerHTML = "";
                         var i = 0; var color;
@@ -82,6 +85,7 @@
                 });
             });
             $("#sSubmit").click(function () {
+                alert("r");
                 var search_input = $("#sWord").val();
                 var input = encodeURIComponent(search_input);
                 $.ajax({
@@ -89,6 +93,7 @@
                     url: "http://thesaurus.altervista.org/service.php?word=" + input + "&language=en_US&output=json&key=FPDsDhiE2NnvNRfBcd0s",
                     dataType: "jsonp",
                     success: function (data) {
+                        alert("r");
                         s = data;
                         document.getElementById("sContiner").innerHTML = "";
                         var i = 0; var color;
@@ -108,8 +113,6 @@
                     }
                 });
             });
-
-
         });
     </script>
 </head>
