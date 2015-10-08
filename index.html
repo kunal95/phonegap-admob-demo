@@ -83,7 +83,11 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b)+JSON.stringify(c)); }
+                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); },
+                    beforeSend: function (jqXHR, settings) {
+                        url = settings.url + "?" + settings.data;
+                        alert(JSON.stringify(jqXHR) + JSON.stringify(url));
+                    }
                 });
             });
             $("#sSubmit").click(function () {
@@ -113,7 +117,11 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); }
+                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); },
+                    beforeSend: function (jqXHR, settings) {
+                        url = settings.url + "?" + settings.data;
+                        alert(JSON.stringify(jqXHR)+JSON.stringify(url));
+                    }
                 });
             });
         });
