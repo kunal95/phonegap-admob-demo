@@ -103,8 +103,8 @@
                     url: "http://thesaurus.altervista.org/service.php?word=" + input + "&language=en_US&output=json&key=FPDsDhiE2NnvNRfBcd0s",
                     dataType: "jsonp",
                     success: function (data) {
+                        $("#sLoad").hide();
                         s = data;
-                        $("#rLoad").hide();
                         document.getElementById("sContiner").innerHTML = "";
                         var i = 0; var color;
                         while (data.response[i].list != null) {
