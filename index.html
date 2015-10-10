@@ -45,18 +45,14 @@
     <script>
         $(document).ready(function () {
             var d,s;
-            alert("r");
             $("#rSubmit").click(function () {
-                alert("r");
                 var search_input = $("#rWord").val();
                 var input = encodeURIComponent(search_input);
-                alert(input);
                 $.ajax({
                     type: 'GET',
                     url: "http://rhymebrain.com/talk?function=getRhymes&word=" + input,
                     dataType: "json",
                     success: function (data) {
-                        alert("r");
                         d = data;
                         document.getElementById("rContainer").innerHTML = "";
                         var i = 0; var color;
@@ -83,15 +79,14 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); },
+                    error: function (a, b, c) { /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c));*/ },
                     beforeSend: function (jqXHR, settings) {
                         url = settings.url + "?" + settings.data;
-                        alert(JSON.stringify(jqXHR) + JSON.stringify(url));
+                      //  alert(JSON.stringify(jqXHR) + JSON.stringify(url));
                     }
                 });
             });
             $("#sSubmit").click(function () {
-                alert("r");
                 var search_input = $("#sWord").val();
                 var input = encodeURIComponent(search_input);
                 $.ajax({
@@ -99,7 +94,6 @@
                     url: "http://thesaurus.altervista.org/service.php?word=" + input + "&language=en_US&output=json&key=FPDsDhiE2NnvNRfBcd0s",
                     dataType: "jsonp",
                     success: function (data) {
-                        alert("r");
                         s = data;
                         document.getElementById("sContiner").innerHTML = "";
                         var i = 0; var color;
@@ -117,10 +111,10 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); },
+                    error: function (a, b, c) { /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); */},
                     beforeSend: function (jqXHR, settings) {
                         url = settings.url + "?" + settings.data;
-                        alert(JSON.stringify(jqXHR)+JSON.stringify(url));
+                        //alert(JSON.stringify(jqXHR)+JSON.stringify(url));
                     }
                 });
             });
@@ -156,7 +150,7 @@
     }
 
     function initApp() {
-    if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
+    if (! AdMob ) {/* alert( 'admob plugin not ready' );*/ return; }
     initAd();
         // display a banner at startup
         createSelectedBanner();
@@ -183,11 +177,11 @@
     function registerAdEvents() {
         // new events, with variable to differentiate: adNetwork, adType, adEvent
         document.addEventListener('onAdFailLoad', function(data){
-            alert('error: ' + data.error +
+            /*alert('error: ' + data.error +
                     ', reason: ' + data.reason +
                     ', adNetwork:' + data.adNetwork +
                     ', adType:' + data.adType +
-                    ', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+                    ', adEvent:' + data.adEvent);*/ // adType: 'banner' or 'interstitial'
         });
         document.addEventListener('onAdLoaded', function(data){});
         document.addEventListener('onAdPresent', function(data){});
