@@ -14,7 +14,7 @@
         body {
             background-color: rgb(240,240,240);
         }
-
+        .mdl-spinner{position:absolute;top:200px;left:150px}
         div#fullpage {
             width: 100%;
             height: 1000px;
@@ -46,6 +46,8 @@
         $(document).ready(function () {
             var d,s;
             $("#rSubmit").click(function () {
+                $("#rLoad").show();
+                document.getElementById("rContainer").innerHTML = "";
                 var search_input = $("#rWord").val();
                 var input = encodeURIComponent(search_input);
                 $.ajax({
@@ -54,6 +56,7 @@
                     dataType: "json",
                     success: function (data) {
                         d = data;
+                        $("#rLoad").hide();
                         document.getElementById("rContainer").innerHTML = "";
                         var i = 0; var color;
                         while (data[i].word != null) {
@@ -79,7 +82,11 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c));*/ },
+                    error: function (a, b, c) {
+                        alert("Someone stole your lyrics :/");
+                        $("#rLoad").hide();
+                        /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c));*/
+                    },
                     beforeSend: function (jqXHR, settings) {
                         url = settings.url + "?" + settings.data;
                       //  alert(JSON.stringify(jqXHR) + JSON.stringify(url));
@@ -87,6 +94,8 @@
                 });
             });
             $("#sSubmit").click(function () {
+                $("#sLoad").show();
+                document.getElementById("sContiner").innerHTML = "";
                 var search_input = $("#sWord").val();
                 var input = encodeURIComponent(search_input);
                 $.ajax({
@@ -95,6 +104,7 @@
                     dataType: "jsonp",
                     success: function (data) {
                         s = data;
+                        $("#rLoad").hide();
                         document.getElementById("sContiner").innerHTML = "";
                         var i = 0; var color;
                         while (data.response[i].list != null) {
@@ -111,7 +121,11 @@
                             i++;
                         }
                     },
-                    error: function (a, b, c) { /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); */},
+                    error: function (a, b, c) {
+                        alert("Either your net is down or aliens attacked our satellites!");
+                        $("#sLoad").hide();
+                        /*alert(this.url); alert(JSON.stringify(a) + JSON.stringify(b) + JSON.stringify(c)); */
+                    },
                     beforeSend: function (jqXHR, settings) {
                         url = settings.url + "?" + settings.data;
                         //alert(JSON.stringify(jqXHR)+JSON.stringify(url));
@@ -291,7 +305,9 @@
             <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:50px;right:10px;opacity:0.85;z-index:1" id="rSubmit">
                 <img src="ic_blur_on_white_24dp.png" />
             </button>
-            <div id="rContainer"></div>
+            <div id="rLoad" class="mdl-spinner mdl-js-spinner is-active" style="display:none;"></div>
+            <div id="rContainer">
+            </div>
         </div>
         <div class="mdl-tabs__panel" id="lannisters-panel">
             <div class="action">
@@ -303,6 +319,7 @@
             <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position:fixed;bottom:50px;right:10px;opacity:0.85;z-index:1" id="sSubmit">
                 <img src="ic_blur_on_white_24dp.png"/>
             </button>
+            <div id="sLoad" class="mdl-spinner mdl-js-spinner is-active" style="display:none"></div>
             <div id="sContiner"></div>
         </div>
         <div class="mdl-tabs__panel" id="targaryens-panel">
