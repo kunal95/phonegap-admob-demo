@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget 
-id="com.rjfun.admobdemo" 
-version="1.0.20141225" 
+id="com.kunal.rhymingApp" 
+version="3.0.20141225" 
 xmlns="http://www.w3.org/ns/widgets"
 xmlns:gap="http://phonegap.com/ns/1.0"
 >
